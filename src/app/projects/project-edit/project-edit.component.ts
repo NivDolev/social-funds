@@ -23,8 +23,8 @@ export class ProjectEditComponent implements OnInit {
 
   }
 
-  onAddProject(): void {
-    // this.projectsService.addProject();
+  onAddProject(project: Project): void {
+    this.projectsService.addProject(project);
   }
 
   onSubmit(): void {
@@ -33,6 +33,7 @@ export class ProjectEditComponent implements OnInit {
     this.project.amount = this.newProject.value.ProjectData.amount;
     this.project.category = this.newProject.value.ProjectData.category;
     this.project.endDate = new Date();
+    this.onAddProject(this.project);
   }
 }
 

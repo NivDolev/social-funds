@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
-    private projectList: Project[];
+    private projectList: Project[] = [];
     constructor() { }
 
     getProjects(): Observable<Project[]> {
@@ -14,8 +14,8 @@ export class ProjectsService {
     }
 
     addProject(project: Project): void {
-        this.projectList.push(project);
-        console.log(this.projectList);
+        console.log(project);
+        // this.projectList.push(project);
     }
 
 }
