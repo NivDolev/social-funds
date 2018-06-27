@@ -1,0 +1,16 @@
+.container-fluid {
+    border-top: black solid 1px;
+    border-bottom: black solid 1px;
+}
+
+.col-2 {
+    padding: 10px;
+}
+
+p .regular {
+    color: grey;
+}
+
+p .bold {
+    color: black;
+}

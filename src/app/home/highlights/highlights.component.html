@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <p class="font-weight-light">{{today | date}}</p>
+      <p class="font-weight-bold">Bringing creative projects to life.</p>
+    </div>
+    <div class="col-2">
+      <p class="font-weight-light">TOTAL BACKERS</p>
+      <p class="font-weight-bold">{{ info.totalBeckers | number}}</p>
+    </div>
+    <div class="col-2">
+      <p class="font-weight-light">FUNDED PROJECTS<span (click)="onAddProject()">+</span></p>
+      <p class="font-weight-bold">{{ info.fundedProjects | number}}</p>
+      </div>
+    <div class="col-2">
+      <p class="font-weight-light">LIVE PROJECTS</p>
+      <p class="font-weight-bold">{{ info.liveProjects | number}}</p>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>

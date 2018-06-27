@@ -1,0 +1,7 @@
+input.ng-invalid.ng-touched {
+    border: 1px red solid;
+}
+
+input[type="number"].ng-touched.ng-invalid {
+    border: 1px red solid;
+}
