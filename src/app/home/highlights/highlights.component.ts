@@ -23,8 +23,8 @@ export class HighlightsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.today = new Date();
     this.activateSubscription = this.highlightSerivce.getInfo().subscribe(
-      (_info: any) => {
-        this.info = _info;
+      (info: any) => {
+        this.info = info;
       }
     );
   }

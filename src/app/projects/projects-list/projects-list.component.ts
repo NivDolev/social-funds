@@ -9,19 +9,25 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./projects-list.component.css']
 })
 
-export class ProjectsListComponent implements OnInit , OnDestroy {
+export class ProjectsListComponent implements OnInit, OnDestroy {
 
-  projectsList: Project[];
   activateSubscription: Subscription;
   uniqueCategories: Set<String>;
-  selectedCategory: String = 'all';
+
+  projectsList: Project[] = [];
+  filteredProjectList: Project[];
 
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    this.activateSubscription = this.projectsService.getProjects(this.selectedCategory)
-    .subscribe((projects => this.projectsList = projects));
-    this.getUniqueCategories();
+    this.activateSubscription = this.projectsService.getProjects()
+      .subscribe(
+        (projectList: Project[]) => {
+          this.projectsList = projectList;
+          this.filteredProjectList = this.projectsList;
+          this.getUniqueCategories();
+        }
+      );
   }
 
   ngOnDestroy(): void {
@@ -29,15 +35,22 @@ export class ProjectsListComponent implements OnInit , OnDestroy {
   }
 
   getUniqueCategories(): void {
-    const categories: String[] = [this.selectedCategory];
+    const categories: String[] = ['all'];
     this.projectsList.forEach(project => {
       categories.push(project.category);
     });
     this.uniqueCategories = new Set(categories);
   }
 
-  onFiltterProjectList(category: String): void {
-    this.selectedCategory = category.toLowerCase();
-    this.projectsService.getProjects(this.selectedCategory);
+  onFiltterProjectList(category: string): void {
+    category = category.toLowerCase();
+    console.log(category);
+    if (category === 'all') {
+      this.filteredProjectList = this.projectsList;
+    } else {
+      this.filteredProjectList = this.projectsList.filter((project: Project) =>
+        project.category === category);
+    }
   }
+
 }

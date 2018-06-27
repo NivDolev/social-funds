@@ -3,21 +3,19 @@ import { Project } from './../projects/models/project.model';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-@Injectable( { providedIn: 'root' } )
+@Injectable({ providedIn: 'root' })
 export class ProjectsService {
+    private projectList: Project[];
+    constructor() { }
 
-    constructor() {}
-
-    getProjects(category: String): Observable<Project[]> {
-        if (category === 'all') {
-            return of(PROJECTS);
-        } else {
-            return of(PROJECTS.filter(project => project.category === category));
-        }
+    getProjects(): Observable<Project[]> {
+        this.projectList = PROJECTS.slice();
+        return of(this.projectList);
     }
 
-    addProject(project: Project) {
-        PROJECTS.push(project);
+    addProject(project: Project): void {
+        this.projectList.push(project);
+        console.log(this.projectList);
     }
 
 }
