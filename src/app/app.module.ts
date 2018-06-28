@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 import { ProjectErrorComponent } from './projects/project-error/project-error.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProjectViewComponent } from './projects/project-view/project-view.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProjectsListComponent,
     HomeComponent,
     ProjectEditComponent,
-    ProjectErrorComponent
+    ProjectErrorComponent,
+    ProjectViewComponent
   ],
   imports: [
     BrowserModule,
