@@ -12,6 +12,7 @@ import { ProjectsListComponent } from './projects/projects-list/projects-list.co
 import { HomeComponent } from './home/home.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 import { ProjectErrorComponent } from './projects/project-error/project-error.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProjectErrorComponent } from './projects/project-error/project-error.co
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
