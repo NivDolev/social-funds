@@ -2,22 +2,26 @@
   <div class="row">
     <nav class="nav nav-pills nav-fill">
       <li class="nav-item" *ngFor="let category of uniqueCategories">
-        <a class="nav-link" (click)="onFiltterProjectList(category)" routerLink="/projects/explore">{{category | uppercase}}</a>
+        <a class="nav-link" (click)="onFiltterProjectList(category)" routerLink="/projects">{{category | uppercase}}</a>
       </li>
     </nav>
   </div>
   <div class="row">
-    <div *ngFor="let project of filteredProjectList" class="col-4">
-      <div class="card" style="width: 18rem">
-        <div class="card-header">
-          <h5 class="card-title">{{project.title}}</h5>
+    <ng-container *ngFor="let project of projectsList">
+      <ng-container *ngIf="project.category === selectedCategory || selectedCategory === 'all'">
+        <div class="col-4">
+          <div class="card" style="width: 18rem">
+            <div class="card-header">
+              <h5 class="card-title">{{project.title}}</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle">{{project.endDate | date}}</h6>
+              <p class="card-text">Amount to collect: {{project.amount | currency:'USD':'symbol':'3.0-0'}}</p>
+              <a href="#">Details</a>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <h6 class="card-subtitle">{{project.endDate | date}}</h6>
-          <p class="card-text">Amount to collect: {{project.amount | currency:'USD':'symbol':'3.0-0'}}</p>
-          <a routerLink="/projects/{{project.id}}">Details</a>
-        </div>
-      </div>
-    </div>
+      </ng-container>
+    </ng-container>
   </div>
 </div>

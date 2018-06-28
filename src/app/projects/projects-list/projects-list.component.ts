@@ -13,6 +13,7 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
 
   activateSubscription: Subscription;
   uniqueCategories: Set<String>;
+  selectedCategory = 'all';
 
   projectsList: Project[] = [];
   filteredProjectList: Project[];
@@ -43,14 +44,15 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
   }
 
   onFiltterProjectList(category: string): void {
-    category = category.toLowerCase();
-    console.log(category);
-    if (category === 'all') {
-      this.filteredProjectList = this.projectsList;
-    } else {
-      this.filteredProjectList = this.projectsList.filter((project: Project) =>
-        project.category === category);
-    }
+    // category = category.toLowerCase();
+    // console.log(category);
+    // if (category === 'all') {
+    //   this.filteredProjectList = this.projectsList;
+    // } else {
+    //   this.filteredProjectList = this.projectsList.filter((project: Project) =>
+    //     project.category === category);
+    // }
+    this.selectedCategory = category;
   }
 
 }
