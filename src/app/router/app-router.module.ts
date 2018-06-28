@@ -1,5 +1,3 @@
-import { AuthGuard } from './../services/auth-guard.service';
-import { ProjectErrorComponent } from './../projects/project-error/project-error.component';
 import { ProjectEditComponent } from './../projects/project-edit/project-edit.component';
 import { HomeComponent } from './../home/home.component';
 import { ProjectsListComponent } from './../projects/projects-list/projects-list.component';
@@ -12,6 +10,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: 'index', component: HomeComponent },
     { path: 'login', component: UserLoginComponent },
+    { path: 'projects/explore/:category', component: ProjectsListComponent},
     { path: 'projects/explore', component: ProjectsListComponent},
     { path: 'projects/new', component: ProjectEditComponent },
     { path: 'projects/:id', component: ProjectEditComponent },
