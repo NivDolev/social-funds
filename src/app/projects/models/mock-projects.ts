@@ -36,8 +36,4 @@ export let PROJECTS: Project[] = [
     amount: 10000,
     category: 'furniture'},
 
-    {id: 7, title: 'Test08',
-    endDate: new Date(),
-    amount: 2000,
-    category: 'food'},
 ];

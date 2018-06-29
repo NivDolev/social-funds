@@ -2,6 +2,7 @@ import { ProjectsService } from './../../services/projects.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Project } from '../models/project.model';
 import { Subscription } from 'rxjs';
+import { Route, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list',
@@ -18,7 +19,8 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
   projectsList: Project[] = [];
   filteredProjectList: Project[];
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private projectsService: ProjectsService,
+              private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this.activateSubscription = this.projectsService.getProjects()
@@ -44,6 +46,7 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
   }
 
   onFiltterProjectList(category: string): void {
+    console.log(this._route.snapshot.paramMap.get('category'));
     // category = category.toLowerCase();
     // console.log(category);
     // if (category === 'all') {

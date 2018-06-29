@@ -26,4 +26,8 @@ export class ProjectsService {
         return this._http.get<Project[]>(this._projectUrl);
     }
 
+    getProject(id: number): Observable<Project> {
+        return of(this.projectList.find(project => project.id === id));
+    }
+
 }
