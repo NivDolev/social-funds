@@ -7,21 +7,22 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.css']
 })
+
 export class UserLoginComponent implements OnInit, OnDestroy {
+
   public email: string;
   public password: string;
-  public isLogged = false;
+  public isLogged: boolean;
   activateSubscription: Subscription;
 
   constructor(private loginService: LogingService) { }
 
   ngOnInit() {
     this.activateSubscription = this.loginService.getLoginStatus()
-      .subscribe(isLogged => {
-        this.isLogged = isLogged;
-        console.log(this.isLogged);
-      }
-      );
+      .subscribe(
+        (logged: boolean) => {
+          this.isLogged = logged;
+        });
   }
 
   ngOnDestroy(): void {
@@ -31,11 +32,9 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
   onLogIn() {
     this.loginService.login();
-    console.log(this.isLogged);
   }
 
   onLogOut() {
     this.loginService.logout();
-    console.log(this.isLogged);
   }
 }

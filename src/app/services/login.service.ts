@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
 export class LogingService {
+    private _isLogged: Subject<boolean>;
     private isLogged = false;
 
-    redirectUrl: string;
+    constructor() {
+        this._isLogged = new BehaviorSubject<boolean>(this.isLogged);
+    }
 
     getLoginStatus(): Observable<boolean> {
-        return of(this.isLogged).pipe(
-            delay(1000));
+        return this._isLogged.asObservable();
     }
 
     login(): void {
         this.isLogged = true;
+        this._isLogged.next(this.isLogged);
     }
 
     logout(): void {
         this.isLogged = false;
+        this._isLogged.next(this.isLogged);
     }
 }

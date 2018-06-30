@@ -1,6 +1,6 @@
 import { HighlightsService } from './../../services/highlights.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-highlights',
@@ -9,13 +9,12 @@ import { Subscription } from 'rxjs';
 })
 
 export class HighlightsComponent implements OnInit, OnDestroy {
-
+  activateSubscription: Subscription;
   public info = {
     totalBeckers: 0,
     fundedProjects: 0,
     liveProjects: 0,
   };
-  activateSubscription: Subscription;
   today: Date;
 
   constructor(private highlightSerivce: HighlightsService) { }
