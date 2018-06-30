@@ -3,6 +3,8 @@ import { Project } from './../projects/models/project.model';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
@@ -10,8 +12,8 @@ export class ProjectsService {
     constructor(private _http: HttpClient) { }
 
     getProjects(): Observable<Project[]> {
-        this.projectList = PROJECTS.slice();
-        return of(this.projectList);
+        // this.projectList = PROJECTS.slice();
+        return of(PROJECTS.slice());
     }
 
     addProject(project: Project): void {
@@ -26,8 +28,9 @@ export class ProjectsService {
         return this._http.get<Project[]>(this._projectUrl);
     }
 
-    getProject(id: number): Observable<Project> {
-        return of(this.projectList.find(project => project.id === id));
+    getProject(id: number | string) {
+        return this.getProjects().pipe(
+            map(projectslist => projectslist.find(project => project.id === +id)));
     }
 
 }

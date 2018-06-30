@@ -3,17 +3,19 @@ import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LogingService {
-    public isLogged = false;
+    private isLogged = false;
 
     redirectUrl: string;
 
-    login(): Observable<boolean> {
-        return of(true).pipe(
-            delay(1000),
-            tap(val => this.isLogged = true)
-        );
+    getLoginStatus(): Observable<boolean> {
+        return of(this.isLogged).pipe(
+            delay(1000));
+    }
+
+    login(): void {
+        this.isLogged = true;
     }
 
     logout(): void {

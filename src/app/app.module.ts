@@ -2,7 +2,6 @@ import { ProjectGuardService } from './services/project-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -27,7 +26,7 @@ import { ProjectViewComponent } from './projects/project-view/project-view.compo
     HomeComponent,
     ProjectEditComponent,
     ProjectErrorComponent,
-    ProjectViewComponent
+    ProjectViewComponent,
   ],
   imports: [
     BrowserModule,

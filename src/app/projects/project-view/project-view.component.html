@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="project">
+    <div *ngIf="project | async as project" class="project">
       <div class="form-group">
         <label for="">{{project.title}}</label>
       </div>

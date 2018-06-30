@@ -2,7 +2,7 @@
   <div class="row">
     <nav class="nav nav-pills nav-fill">
       <li class="nav-item" *ngFor="let category of uniqueCategories">
-        <a class="nav-link" (click)="onFiltterProjectList(category)" routerLink="/projects/explore/{{category}}">{{category | uppercase}}</a>
+        <a class="nav-link" [class.active]="selectedCategory === category" (click)="onFiltterProjectList(category)" routerLink="/projects/explore/{{category}}">{{category | uppercase}}</a>
       </li>
     </nav>
   </div>

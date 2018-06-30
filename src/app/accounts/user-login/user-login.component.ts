@@ -10,21 +10,32 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class UserLoginComponent implements OnInit, OnDestroy {
   public email: string;
   public password: string;
-  private isLogged = false;
+  public isLogged = false;
   activateSubscription: Subscription;
 
-  constructor() { }
+  constructor(private loginService: LogingService) { }
 
   ngOnInit() {
+    this.activateSubscription = this.loginService.getLoginStatus()
+      .subscribe(isLogged => {
+        this.isLogged = isLogged;
+        console.log(this.isLogged);
+      }
+      );
   }
 
   ngOnDestroy(): void {
+    this.activateSubscription.unsubscribe();
   }
 
 
   onLogIn() {
+    this.loginService.login();
+    console.log(this.isLogged);
   }
 
   onLogOut() {
+    this.loginService.logout();
+    console.log(this.isLogged);
   }
 }

@@ -1,9 +1,10 @@
 import { ProjectsService } from './../../services/projects.service';
 import { Project } from './../models/project.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
 import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -12,28 +13,34 @@ import { Location } from '@angular/common';
   styleUrls: ['./project-view.component.css']
 })
 export class ProjectViewComponent implements OnInit , OnDestroy{
-  project: Project;
+  project: Observable<Project>;
   activateSubscription: Subscription;
   id: number;
 
   constructor(private _route: ActivatedRoute,
-              private _router: Router,
               private _location: Location,
               private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    this.getProject();
+    // this.getProject();
+    // this.id = +this._route.snapshot.paramMap.get('id');
+    // this.activateSubscription = this.projectsService.getProject(this.id)
+    //   .subscribe(project => this.project = project);
+    this.project = this._route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+    this.projectsService.getProject(+params.get('id')))
+    );
   }
 
   ngOnDestroy() {
-    this.activateSubscription.unsubscribe();
+    // this.activateSubscription.unsubscribe();
   }
 
-  getProject(): void {
-    this.id = +this._route.snapshot.paramMap.get('id');
-    this.activateSubscription = this.projectsService.getProject(this.id)
-      .subscribe(project => this.project = project);
-  }
+  // getProject(): void {
+  //   this.id = +this._route.snapshot.paramMap.get('id');
+  //   this.activateSubscription = this.projectsService.getProject(this.id)
+  //     .subscribe(project => this.project = project);
+  // }
 
   onBack(): void {
     this._location.back();
