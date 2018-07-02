@@ -1,4 +1,4 @@
-import { PROJECTS } from '../projects/models/mock-projects';
+import { PROJECTS } from './../projects/models/mock-projects';
 import { Project } from './../projects/models/project.model';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -8,12 +8,16 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
-    private projectList: Project[] = [];
-    constructor(private _http: HttpClient) { }
+
+    private projectList: Project[];
+
+    constructor(private _http: HttpClient) {
+        this.projectList = PROJECTS.slice();
+    }
 
     getProjects(): Observable<Project[]> {
-        // this.projectList = PROJECTS.slice();
-        return of(PROJECTS.slice());
+        this.projectList = PROJECTS.slice();
+        return of(this.projectList);
     }
 
     addProject(project: Project): void {
