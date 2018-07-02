@@ -1,8 +1,8 @@
+import { Project } from './../models/project.model';
 import { ProjectsService } from './../../services/projects.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Project } from '../models/project.model';
 import { Subscription } from 'rxjs';
-import { Route, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-projects-list',
@@ -15,19 +15,18 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
   activateSubscription: Subscription;
   uniqueCategories: Set<String>;
   selectedCategory = 'all';
+  project: Project;
 
   projectsList: Project[] = [];
-  filteredProjectList: Project[];
 
   constructor(private projectsService: ProjectsService,
-              private _route: ActivatedRoute) { }
+    private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this.activateSubscription = this.projectsService.getProjects()
       .subscribe(
         (projectList: Project[]) => {
           this.projectsList = projectList;
-          this.filteredProjectList = this.projectsList;
           this.getUniqueCategories();
         }
       );
@@ -47,15 +46,10 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
 
   onFiltterProjectList(category: string): void {
     console.log(this._route.snapshot.paramMap.get('category'));
-    // category = category.toLowerCase();
-    // console.log(category);
-    // if (category === 'all') {
-    //   this.filteredProjectList = this.projectsList;
-    // } else {
-    //   this.filteredProjectList = this.projectsList.filter((project: Project) =>
-    //     project.category === category);
-    // }
     this.selectedCategory = category;
   }
 
+  addProject(project: Project): void {
+    this.projectsService.addProject(project);
+  }
 }
