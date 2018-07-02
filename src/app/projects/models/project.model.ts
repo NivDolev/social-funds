@@ -1,10 +1,10 @@
 export class Project {
-    private static currentId = 1;
+    private static currentId = 0;
     public id = ++Project.currentId;
 
     constructor (
         public title: string,
-        public endDate: Date,
+        public endDate: string,
         public amount: number,
         public category: string
     ) { }

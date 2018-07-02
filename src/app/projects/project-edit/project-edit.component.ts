@@ -13,9 +13,7 @@ export class ProjectEditComponent implements OnInit {
 
   @ViewChild('newProject')
   newProject: NgForm;
-
   submitted = false;
-  project: Project = {id: 10, title: '', endDate: new Date(), amount: 0, category: '' };
 
   constructor(private projectsService: ProjectsService) { }
 
@@ -28,12 +26,21 @@ export class ProjectEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;
-    this.project.title = this.newProject.value.ProjectData.title;
-    this.project.amount = this.newProject.value.ProjectData.amount;
-    this.project.category = this.newProject.value.ProjectData.category;
-    this.project.endDate = new Date();
-    this.onAddProject(this.project);
+    console.log(this.newProject.value.ProjectData.date);
+    if (this.newProject.valid) {
+      const project: Project = new Project(
+        this.newProject.value.ProjectData.title,
+        this.newProject.value.ProjectData.date,
+        this.newProject.value.ProjectData.amount,
+        this.newProject.value.ProjectData.category
+      );
+      this.onAddProject(project);
+      this.submitted = true;
+      this.newProject.reset();
+      console.log(project);
+    } else {
+      console.log('invalid');
+    }
   }
 }
 

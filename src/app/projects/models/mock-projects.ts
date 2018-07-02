@@ -1,39 +1,12 @@
 import { Project } from './project.model';
 
 export let PROJECTS: Project[] = [
-    {id: 0, title: 'Test01',
-    endDate: new Date(),
-    amount: 10000,
-    category: 'furniture'},
-
-    {id: 1, title: 'Test02',
-    endDate: new Date(),
-    amount: 2000,
-    category: 'food'},
-
-    {id: 2, title: 'Test03',
-    endDate: new Date(),
-    amount: 10000,
-    category: 'furniture'},
-
-    {id: 3, title: 'Test04',
-    endDate: new Date(),
-    amount: 2000,
-    category: 'food'},
-
-    {id: 4, title: 'Test05',
-    endDate: new Date(),
-    amount: 10000,
-    category: 'furniture'},
-
-    {id: 5, title: 'Test06',
-    endDate: new Date(),
-    amount: 2000,
-    category: 'food'},
-
-    {id: 6, title: 'Test07',
-    endDate: new Date(),
-    amount: 10000,
-    category: 'furniture'},
-
+    new Project('Test01', '01/01/2018', 7500, 'food'),
+    new Project('Test02', '01/01/2018', 10000, 'furniture'),
+    new Project('Test03', '01/01/2018', 2000, 'furniture'),
+    new Project('Test04', '01/01/2018', 1000, 'food'),
+    new Project('Test05', '01/01/2018', 5000, 'furniture'),
+    new Project('Test06', '01/01/2018', 7500, 'food'),
+    new Project('Test07', '01/01/2018', 5000, 'car'),
+    new Project('Test08', '01/01/2018', 2000, 'car'),
 ];
