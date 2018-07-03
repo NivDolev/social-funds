@@ -26,10 +26,8 @@ export class ProjectsService {
         this._projectObs.next(this.projectList);
     }
 
-    getProject(id: number | string) {
-        return this.getProjects()
-            .pipe(map(projectslist => projectslist
-                .find(project => project.id === +id)));
+    getProject(id: number): Project {
+        return this.projectList.find((project) => project.id === id);
     }
 
     getHttpProjects(): Observable<Project[]> {

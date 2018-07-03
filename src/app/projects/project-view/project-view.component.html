@@ -1,20 +1,29 @@
 <div class="container">
   <div class="row">
-    <div *ngIf="project | async as project" class="project">
+    <h4>Project Details</h4>
+  </div>
+  <div class="row">
+    <div *ngIf="project" class="col-4">
       <div class="form-group">
-        <label for="">{{project.title}}</label>
+        <label>Title:</label>
+        <label class="form-control">{{project.title}}</label>
       </div>
+      <label>Amount:</label>
       <div class="form-group">
-        <label for="">{{project.amount}}</label>
+        <label class="form-control">{{project.amount}}</label>
       </div>
+      <label>End Date:</label>
       <div class="form-group">
-        <label for="">{{project.endDate}}</label>
+        <label class="form-control">{{project.endDate}}</label>
       </div>
+      <label>Category:</label>
       <div class="form-group">
-        <label for="">{{project.category}}</label>
+        <label class="form-control">{{project.category}}</label>
       </div>
       <div class="form-group">
         <button class="btn btn-primary" (click)="onBack()">Back</button>
+        <button class="btn btn-primary" style="float: right" 
+        routerLink="/projects/{{project.id}}/edit">Edit</button>
       </div>
     </div>
   </div>

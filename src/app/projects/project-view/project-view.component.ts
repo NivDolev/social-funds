@@ -12,35 +12,17 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './project-view.component.html',
   styleUrls: ['./project-view.component.css']
 })
-export class ProjectViewComponent implements OnInit , OnDestroy{
-  project: Observable<Project>;
-  activateSubscription: Subscription;
-  id: number;
+export class ProjectViewComponent implements OnInit {
+  project: Project;
 
   constructor(private _route: ActivatedRoute,
               private _location: Location,
               private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    // this.getProject();
-    // this.id = +this._route.snapshot.paramMap.get('id');
-    // this.activateSubscription = this.projectsService.getProject(this.id)
-    //   .subscribe(project => this.project = project);
-    this.project = this._route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-    this.projectsService.getProject(+params.get('id')))
-    );
+    const id = +this._route.snapshot.paramMap.get('id');
+    this.project = this.projectsService.getProject(id);
   }
-
-  ngOnDestroy() {
-    // this.activateSubscription.unsubscribe();
-  }
-
-  // getProject(): void {
-  //   this.id = +this._route.snapshot.paramMap.get('id');
-  //   this.activateSubscription = this.projectsService.getProject(this.id)
-  //     .subscribe(project => this.project = project);
-  // }
 
   onBack(): void {
     this._location.back();
