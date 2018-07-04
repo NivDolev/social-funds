@@ -14,6 +14,7 @@ export class ProjectEditComponent implements OnInit {
 
   @ViewChild('newProject')
   newProject: NgForm;
+
   _projectData: FormGroup;
   submitted = false;
   editMode: boolean;
@@ -33,6 +34,11 @@ export class ProjectEditComponent implements OnInit {
     } else {
       this.editMode = false;
     }
+    this.newProject.form.patchValue({
+      ProjectData: {
+        title: 'test'
+      }
+    });
   }
 
   onAddProject(project: Project): void {
@@ -60,7 +66,7 @@ export class ProjectEditComponent implements OnInit {
       category: new FormControl(),
     });
     this._projectData.patchValue({
-      title : this.project.title,
+      title: this.project.title,
       date: this.project.endDate,
       amount: this.project.amount,
       category: this.project.category

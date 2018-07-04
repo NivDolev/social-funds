@@ -1,6 +1,7 @@
 import { Subscription } from 'rxjs';
 import { LogingService } from '../../services/login.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-user-login',
@@ -10,8 +11,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 export class UserLoginComponent implements OnInit, OnDestroy {
 
-  public email: string;
-  public password: string;
+  public email = '';
+  public password = '';
   public isLogged: boolean;
   activateSubscription: Subscription;
 
@@ -31,7 +32,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
 
 
   onLogIn() {
-    this.loginService.login();
+    this.loginService.login({email: this.email, password: this.password});
   }
 
   onLogOut() {
