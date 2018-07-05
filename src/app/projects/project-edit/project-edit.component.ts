@@ -1,8 +1,8 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, CanActivate } from '@angular/router';
 import { ProjectsService } from './../../services/projects.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Project } from '../models/project.model';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -12,83 +12,88 @@ import { NgForm, FormGroup, FormControl } from '@angular/forms';
 })
 export class ProjectEditComponent implements OnInit {
 
-  @ViewChild('newProject')
-  newProject: NgForm;
+  public submitted = false;
+  private _editMode: boolean;
+  get editMode() {
+    return this._editMode;
+  }
 
-  _projectData: FormGroup;
-  submitted = false;
-  editMode: boolean;
+  projectData: FormGroup;
+  get title() { return this.projectData.get('title'); }
+  get endDate() { return this.projectData.get('endDate'); }
+  get amount() { return this.projectData.get('amount'); }
+  get category() { return this.projectData.get('category'); }
 
-  project: Project;
+  constructor(
+    private projectsService: ProjectsService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder) {
 
-  constructor(private projectsService: ProjectsService,
-    private route: ActivatedRoute) { }
+    this.createForm();
+  }
 
   ngOnInit() {
-    const id: number = +this.route.snapshot.paramMap.get('id');
-    console.log(id);
-    if (id !== 0) {
-      this.getProject(id);
-      this.updateProjectForm();
-      this.editMode = true;
-    } else {
-      this.editMode = false;
-    }
-    this.newProject.form.patchValue({
-      ProjectData: {
-        title: 'test'
-      }
+    this.getProject();
+  }
+
+  createForm() {
+    this.projectData = this.fb.group({
+      title: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+      amount: ['', [Validators.required, this.validateAmount.bind(this)]],
+      category: ['', [Validators.required]],
+      id: ''
     });
   }
 
-  onAddProject(project: Project): void {
-    this.projectsService.addProject(project);
-  }
 
   onSubmit(): void {
-    console.log(this.newProject.value.ProjectData.date);
-    if (this.newProject.valid) {
-      this.addNewProject();
+    if (this.projectData.valid) {
+      console.log('Form is valid');
     } else {
-      this.updateProject();
+      console.log('form is invalid');
     }
   }
 
-  getProject(id: number): void {
-    this.project = this.projectsService.getProject(id);
+  getProject(): void {
+    const id: number = +this.route.snapshot.paramMap.get('id');
+    const project: Project = this.projectsService.getProject(id);
+    console.log('Project Data: ', project);
+    if (id !== 0) {
+      this.updateProjectForm(project);
+      this._editMode = true;
+    } else {
+      this._editMode = false;
+    }
   }
 
-  updateProjectForm() {
-    this._projectData = new FormGroup({
-      title: new FormControl(),
-      date: new FormControl(),
-      amount: new FormControl(),
-      category: new FormControl(),
+  updateProjectForm(project: Project) {
+    this.projectData.patchValue({
+      id: project.id,
+      title: project.title,
+      endDate: new Date(),
+      amount: project.amount,
+      category: project.category
     });
-    this._projectData.patchValue({
-      title: this.project.title,
-      date: this.project.endDate,
-      amount: this.project.amount,
-      category: this.project.category
-    });
-    this.newProject.form.patchValue(this._projectData);
   }
 
   addNewProject(): void {
-    const project: Project = new Project(
-      this.newProject.value.ProjectData.title,
-      this.newProject.value.ProjectData.date,
-      this.newProject.value.ProjectData.amount,
-      this.newProject.value.ProjectData.category
-    );
-    this.onAddProject(project);
-    this.submitted = true;
-    this.newProject.reset();
-    console.log(project);
+
   }
 
   updateProject(): void {
-    console.log('invalid');
+
+  }
+
+  validateAmount(control: FormControl): {[errorCode: string]: boolean} {
+    try {
+      if (+control.value < 1) {
+        return {'Amount is smaller then 1': true};
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    return null;
   }
 }
 

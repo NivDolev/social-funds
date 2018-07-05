@@ -7,7 +7,7 @@ import { User } from '../accounts/models/user.model';
 @Injectable({ providedIn: 'root' })
 export class LogingService {
     public _isLoggedObs: Subject<boolean>;
-    private isLogged = false;
+    private isLogged = true;
     private usersList: User[];
 
     constructor() {
