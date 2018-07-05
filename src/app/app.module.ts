@@ -1,7 +1,7 @@
 import { ProjectGuardService } from './services/project-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -32,7 +32,8 @@ import { ProjectViewComponent } from './projects/project-view/project-view.compo
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [ ProjectGuardService ],
   bootstrap: [AppComponent]

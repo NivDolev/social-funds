@@ -23,8 +23,7 @@ export class LogingService {
         return this.isLogged;
     }
 
-    login(_user: User): void {
-        console.log(_user);
+    logIn(_user: User): void {
         this.usersList.forEach(user => {
             if (user.email === _user.email && user.password === _user.password) {
                 this.isLogged = true;
@@ -34,7 +33,7 @@ export class LogingService {
         if (!this.isLogged) { alert('Username or password incorrect'); }
     }
 
-    logout(): void {
+    logOut(): void {
         this.isLogged = false;
         this._isLoggedObs.next(this.isLogged);
     }

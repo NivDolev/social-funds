@@ -1,7 +1,9 @@
 import { Subscription } from 'rxjs';
 import { LogingService } from '../../services/login.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login',
@@ -11,14 +13,38 @@ import { User } from '../models/user.model';
 
 export class UserLoginComponent implements OnInit, OnDestroy {
 
-  public email = '';
-  public password = '';
   public isLogged: boolean;
   activateSubscription: Subscription;
 
-  constructor(private loginService: LogingService) { }
+  loginForm: FormGroup;
+
+  constructor(
+    private loginService: LogingService,
+    private fb: FormBuilder,
+    private router: Router) {
+
+    this.creatForm();
+  }
+
+  creatForm() {
+    this.loginForm = this.fb.group({
+      loginDetails: this.fb.group({
+        email: ['', Validators.required ],
+        password: ['', Validators.required ],
+      }),
+      remmember: false
+    });
+  }
 
   ngOnInit() {
+    this.subScribeToLogin();
+  }
+
+  ngOnDestroy(): void {
+    this.activateSubscription.unsubscribe();
+  }
+
+  subScribeToLogin() {
     this.activateSubscription = this.loginService.getLoginStatus()
       .subscribe(
         (logged: boolean) => {
@@ -26,16 +52,34 @@ export class UserLoginComponent implements OnInit, OnDestroy {
         });
   }
 
-  ngOnDestroy(): void {
-    this.activateSubscription.unsubscribe();
+  onSubmit() {
+    if (!this.isLogged) {
+      // console.log('user is loged out, attemting to log in');
+      if (this.loginForm.valid) {
+        // console.log('form is valid, calling "onLogIn"');
+        this.onLogIn();
+        this.loginForm.reset();
+        this.router.navigate(['/index']);
+    } else {
+      // console.log('form is invalid!');
+      this.onLogOut();
+      }
+    } else {
+      // console.log('user is logged in, attempting to log out');
+      this.onLogOut();
+    }
   }
 
-
   onLogIn() {
-    this.loginService.login({email: this.email, password: this.password});
+    const login = new User(
+      this.loginForm.get('loginDetails.email').value,
+      this.loginForm.get('loginDetails.password').value
+    );
+    // console.log('calling loging service with user details: ', login);
+    this.loginService.logIn(login);
   }
 
   onLogOut() {
-    this.loginService.logout();
+    this.loginService.logOut();
   }
 }
