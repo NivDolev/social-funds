@@ -23,8 +23,11 @@
               <li class="nav-item active">
                 <a class="nav-link" routerLink="">Search</a>
               </li>
-              <li class="nav-item active">
+              <li *ngIf="!isLogged" class="nav-item active">
                 <a class="nav-link" routerLink="login">Login<span class="sr-only"></span></a>
+              </li>
+              <li *ngIf="isLogged" class="nav-item active">
+                <a class="nav-link" routerLink="login">Logout<span class="sr-only"></span></a>
               </li>
             </ul>
       </div>
