@@ -4,7 +4,7 @@ export class Project {
 
     constructor (
         public title: string,
-        public endDate: string,
+        public endDate: Date,
         public amount: number,
         public category: string
     ) { }

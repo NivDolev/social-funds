@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <h4>Project Details</h4>
+      <h4>Project Details</h4>
   </div>
   <div class="row">
     <div *ngIf="project" class="col-4">
@@ -12,18 +12,17 @@
       <div class="form-group">
         <label class="form-control">{{project.amount}}</label>
       </div>
-      <label>End Date:</label>
-      <div class="form-group">
-        <label class="form-control">{{project.endDate}}</label>
-      </div>
       <label>Category:</label>
       <div class="form-group">
         <label class="form-control">{{project.category}}</label>
       </div>
+      <label>End Date:</label>
+      <div class="form-group">
+        <label class="form-control">{{project.endDate | date: 'mediumDate'}}</label>
+      </div>
       <div class="form-group">
         <button class="btn btn-primary" (click)="onBack()">Back</button>
-        <button class="btn btn-primary" style="float: right" 
-        routerLink="/projects/{{project.id}}/edit">Edit</button>
+        <button class="btn btn-primary" style="float: right" routerLink="/projects/{{project.id}}/edit">Edit</button>
       </div>
     </div>
   </div>

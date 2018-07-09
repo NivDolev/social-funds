@@ -1,4 +1,5 @@
-import { ActivatedRoute, CanActivate } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute, CanActivate, Router } from '@angular/router';
 import { ProjectsService } from './../../services/projects.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Project } from '../models/project.model';
@@ -10,13 +11,13 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   templateUrl: './project-edit.component.html',
   styleUrls: ['./project-edit.component.css']
 })
+
 export class ProjectEditComponent implements OnInit {
 
-  public submitted = false;
-  private _editMode: boolean;
-  get editMode() {
-    return this._editMode;
-  }
+  private project: Project;
+  private _id: number;
+  get id() { return this._id; }
+  foundProject = false;
 
   projectData: FormGroup;
   get title() { return this.projectData.get('title'); }
@@ -27,13 +28,15 @@ export class ProjectEditComponent implements OnInit {
   constructor(
     private projectsService: ProjectsService,
     private route: ActivatedRoute,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private location: Location) {
 
     this.createForm();
   }
 
   ngOnInit() {
     this.getProject();
+    this.convetDateToString(new Date());
   }
 
   createForm() {
@@ -42,7 +45,6 @@ export class ProjectEditComponent implements OnInit {
       endDate: ['', [Validators.required]],
       amount: ['', [Validators.required, this.validateAmount.bind(this)]],
       category: ['', [Validators.required]],
-      id: ''
     });
   }
 
@@ -56,14 +58,12 @@ export class ProjectEditComponent implements OnInit {
   }
 
   getProject(): void {
-    const id: number = +this.route.snapshot.paramMap.get('id');
-    const project: Project = this.projectsService.getProject(id);
-    console.log('Project Data: ', project);
-    if (id !== 0) {
-      this.updateProjectForm(project);
-      this._editMode = true;
-    } else {
-      this._editMode = false;
+    this.foundProject = false;
+    this._id = +this.route.snapshot.paramMap.get('id');
+    if (this._id > 0) {
+      this.project = this.projectsService.getProject(this.id);
+      this.updateProjectForm(this.project);
+      this.foundProject = true;
     }
   }
 
@@ -71,24 +71,32 @@ export class ProjectEditComponent implements OnInit {
     this.projectData.patchValue({
       id: project.id,
       title: project.title,
-      endDate: new Date(),
+      endDate: this.convetDateToString(new Date()),
       amount: project.amount,
-      category: project.category
+      category: project.category,
     });
-  }
-
-  addNewProject(): void {
-
   }
 
   updateProject(): void {
 
   }
 
-  validateAmount(control: FormControl): {[errorCode: string]: boolean} {
+  cancel(): void {
+    this.location.back();
+  }
+  save() {
+
+  }
+
+  convetDateToString(date: Date): string {
+    return date.toJSON().slice(0, 10);
+  }
+
+  // Form Validators
+  validateAmount(control: FormControl): { [errorCode: string]: boolean } {
     try {
       if (+control.value < 1) {
-        return {'Amount is smaller then 1': true};
+        return { 'Amount is smaller then 1': true };
       }
     } catch (e) {
       console.log(e);
@@ -96,4 +104,3 @@ export class ProjectEditComponent implements OnInit {
     return null;
   }
 }
-

@@ -1,10 +1,8 @@
 import { ProjectsService } from './../../services/projects.service';
 import { Project } from './../models/project.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { switchMap } from 'rxjs/operators';
 
 
 @Component({

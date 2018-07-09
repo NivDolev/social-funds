@@ -1,44 +1,55 @@
-<div class="container">
+<div *ngIf="foundProject" class="container">
+  <div class="row">
+    <h4>Project Details</h4>
+  </div>
   <div class="row">
 
 
-    <form [formGroup]="projectData" (ngSubmit)="onSubmit()">
+    <div class="col-4">
 
-      <div>
+      <form [formGroup]="projectData" (ngSubmit)="onSubmit()">
 
-        <div class="form-group">
-          <input type="text" formControlName="title" class="form-control" placeholder="Title">
-          <span class="errorHelper" *ngIf="title.invalid && title.touched">
+        <div>
+
+          <div class="form-group">
+            <label for="">Title:</label>
+            <input type="text" formControlName="title" class="form-control" placeholder="Title">
+            <span class="errorHelper" *ngIf="title.invalid && title.touched">
               Must have a title
             </span>
-        </div>
+          </div>
 
-        <div class="form-group">
-          <input type="text" formControlName="endDate" class="form-control" placeholder="Date">
-          <span class="errorHelper" *ngIf="endDate.invalid && endDate.touched">
-              Must have a valid date
-            </span>
-        </div>
-
-        <div class="form-group">
-          <input type="number" formControlName="amount" class="form-control" placeholder="Amount">
-          <span class="errorHelper" *ngIf="amount.invalid && amount.touched">
+          <div class="form-group">
+            <label for="">Amount:</label>
+            <input type="number" formControlName="amount" class="form-control" placeholder="Amount">
+            <span class="errorHelper" *ngIf="amount.invalid && amount.touched">
               Number cannot be 0 or lower
             </span>
-        </div>
+          </div>
 
-        <div class="form-group">
-          <input type="text" formControlName="category" class="form-control" placeholder="Category">
-          <span class="errorHelper" *ngIf="category.touched && category.invalid">
+          <div class="form-group">
+            <label for="">Category:</label>
+            <input type="text" formControlName="category" class="form-control" placeholder="Category">
+            <span class="errorHelper" *ngIf="category.touched && category.invalid">
               Must enter category
             </span>
+          </div>
+
+          <div class="form-group">
+            <label for="">End Date:</label>
+            <input type="date" formControlName="endDate" class="form-control" placeholder="Date">
+            <span *ngIf="endDate.invalid && endDate.touched" class="errorHelper">
+              Must have a valid date
+            </span>
+          </div>
+
         </div>
-
-
-      </div>
-      <button *ngIf="!editMode" type="submit" class="btn btn-primary">Submit</button>
-      <button *ngIf="editMode" type="submit" class="btn btn-primary">Save</button>
-    </form>
-
+        <button class="btn btn-primary" (click)="cancel()" style="float: left">Cancel</button>
+        <button class="btn btn-primary" style="float: right">Save</button>
+      </form>
+    </div>
   </div>
+</div>
+<div *ngIf="!foundProject" class="container">
+  <p>project was not found</p>
 </div>

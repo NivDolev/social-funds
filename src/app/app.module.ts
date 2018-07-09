@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 import { ProjectErrorComponent } from './projects/project-error/project-error.component';
 import { ProjectViewComponent } from './projects/project-view/project-view.component';
+import { ProjectNewComponent } from './projects/project-new/project-new.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ProjectViewComponent } from './projects/project-view/project-view.compo
     ProjectEditComponent,
     ProjectErrorComponent,
     ProjectViewComponent,
+    ProjectNewComponent,
   ],
   imports: [
     BrowserModule,

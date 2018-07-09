@@ -1,3 +1,4 @@
+import { ProjectNewComponent } from './../projects/project-new/project-new.component';
 import { ProjectGuardService } from './../services/project-guard.service';
 import { ProjectViewComponent } from './../projects/project-view/project-view.component';
 import { ProjectEditComponent } from './../projects/project-edit/project-edit.component';
@@ -13,7 +14,7 @@ const routes: Routes = [
     { path: 'login', component: UserLoginComponent },
     { path: 'projects/explore/:category', component: ProjectsListComponent},
     { path: 'projects/explore', component: ProjectsListComponent},
-    { path: 'projects/new', canActivate: [ProjectGuardService], component: ProjectEditComponent },
+    { path: 'projects/new', canActivate: [ProjectGuardService], component: ProjectNewComponent },
     { path: 'projects/:id', component: ProjectViewComponent },
     { path: 'projects/:id/edit', component: ProjectEditComponent },
     { path: 'projects', redirectTo: 'projects/explore', pathMatch: 'full' },

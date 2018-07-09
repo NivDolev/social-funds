@@ -15,7 +15,7 @@
               <h5 class="card-title">{{project.title}}</h5>
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle">{{project.endDate}}</h6>
+              <h6 class="card-subtitle">{{project.endDate | date: 'mediumDate' }}</h6>
               <p class="card-text">Amount to collect: {{project.amount | currency:'USD':'symbol':'3.0-0'}}</p>
               <a [routerLink]="['/projects', project.id]">Details</a>
             </div>
