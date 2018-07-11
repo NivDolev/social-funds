@@ -34,4 +34,7 @@ export class ProjectsService {
         return this._http.get<Project[]>(this._projectUrl);
     }
 
+    updateProject(project: Project): void {
+        console.log('Project updated');
+    }
 }

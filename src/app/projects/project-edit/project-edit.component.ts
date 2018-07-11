@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
-import { ActivatedRoute, CanActivate, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectsService } from './../../services/projects.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Project } from '../models/project.model';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -29,7 +29,8 @@ export class ProjectEditComponent implements OnInit {
     private projectsService: ProjectsService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private location: Location) {
+    private location: Location,
+    private router: Router) {
 
     this.createForm();
   }
@@ -46,15 +47,6 @@ export class ProjectEditComponent implements OnInit {
       amount: ['', [Validators.required, this.validateAmount.bind(this)]],
       category: ['', [Validators.required]],
     });
-  }
-
-
-  onSubmit(): void {
-    if (this.projectData.valid) {
-      console.log('Form is valid');
-    } else {
-      console.log('form is invalid');
-    }
   }
 
   getProject(): void {
@@ -78,14 +70,36 @@ export class ProjectEditComponent implements OnInit {
   }
 
   updateProject(): void {
-
+    this.project = {
+      title: this.title.value,
+      amount: this.amount.value,
+      category: this.category.value,
+      endDate: this.endDate.value,
+      id: this.id
+    };
+    console.log(this.project);
   }
 
   cancel(): void {
-    this.location.back();
+    this.goToProjectView();
   }
-  save() {
 
+  save() {
+    if (this.projectData.valid) {
+      console.log('Form is valid');
+      this.updateProject();
+    } else {
+      console.log('form is invalid');
+    }
+    this.goToProjectView();
+  }
+
+  onSubmit(): void {
+
+  }
+
+  goToProjectView(): void {
+    this.router.navigate(['/projects/' + this.id]);
   }
 
   convetDateToString(date: Date): string {
