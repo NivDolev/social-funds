@@ -1,5 +1,5 @@
 export class Project {
-    private static currentId = 1;
+    private static currentId = 0;
     public id = ++Project.currentId;
 
     constructor (

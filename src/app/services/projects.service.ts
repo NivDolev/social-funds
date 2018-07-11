@@ -34,7 +34,13 @@ export class ProjectsService {
         return this._http.get<Project[]>(this._projectUrl);
     }
 
-    updateProject(project: Project): void {
+    updateProject(_project: Project): void {
+        console.log(_project);
+        const index = this.projectList.findIndex((project: Project) => {
+            return (project.id === _project.id);
+        });
+        this.projectList[index] = _project;
         console.log('Project updated');
+        this._projectObs.next(this.projectList);
     }
 }

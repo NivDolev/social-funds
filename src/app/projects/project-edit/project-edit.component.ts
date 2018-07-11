@@ -70,14 +70,13 @@ export class ProjectEditComponent implements OnInit {
   }
 
   updateProject(): void {
-    this.project = {
+    this.projectsService.updateProject({
       title: this.title.value,
       amount: this.amount.value,
       category: this.category.value,
       endDate: this.endDate.value,
       id: this.id
-    };
-    console.log(this.project);
+    });
   }
 
   cancel(): void {
@@ -86,7 +85,7 @@ export class ProjectEditComponent implements OnInit {
 
   save() {
     if (this.projectData.valid) {
-      console.log('Form is valid');
+      console.log('Form is valid, calling project service update');
       this.updateProject();
     } else {
       console.log('form is invalid');
@@ -95,11 +94,11 @@ export class ProjectEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-
+    console.log('form submitted');
   }
 
   goToProjectView(): void {
-    this.router.navigate(['/projects/' + this.id]);
+    this.router.navigate(['/projects/', this.id]);
   }
 
   convetDateToString(date: Date): string {
