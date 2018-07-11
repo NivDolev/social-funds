@@ -17,7 +17,7 @@ const routes: Routes = [
     { path: 'projects/new', canActivate: [ProjectGuardService], component: ProjectNewComponent },
     { path: 'projects/:id', component: ProjectViewComponent },
     { path: 'projects/:id/edit', component: ProjectEditComponent },
-    { path: 'projects', redirectTo: 'projects/explore', pathMatch: 'full' },
+    { path: 'projects', redirectTo: 'projects/explore/all', pathMatch: 'full' },
     { path: '', redirectTo: 'index', pathMatch: 'full' },
     { path: '**', redirectTo: 'index', pathMatch: 'full' },
 ];

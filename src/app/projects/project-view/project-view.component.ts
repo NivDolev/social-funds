@@ -1,8 +1,7 @@
 import { ProjectsService } from './../../services/projects.service';
 import { Project } from './../models/project.model';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +13,7 @@ export class ProjectViewComponent implements OnInit {
   project: Project;
 
   constructor(private _route: ActivatedRoute,
-              private _location: Location,
+              private _router: Router,
               private projectsService: ProjectsService) { }
 
   ngOnInit() {
@@ -23,7 +22,7 @@ export class ProjectViewComponent implements OnInit {
   }
 
   onBack(): void {
-    this._location.back();
+    this._router.navigate(['/projects/explore/all']);
   }
 
 }
